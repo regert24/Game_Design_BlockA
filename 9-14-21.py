@@ -13,3 +13,8 @@ a="Hello"
 b="world!"
 print(a+b)
 
+nme = "tom"
+txt="My name is {}"
+print(txt.format(nme))
+
+
