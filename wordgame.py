@@ -9,10 +9,10 @@ os.system('cls')
 counter = 1
 program = 1
 words = ["Dallas","New York City","Atlanta","Washington DC","San Francisco","Houston","Jacksonville","Nashville","Los Angeles","Indianapolis"]
+print(words)
 print ("This is a list of big cities in america. I have chosen a random city from this list. You have 5 guesses to try and guess which city I chose!")
 game = input("Do you want to play? Type Y for yes or N for no: ")
 randWord = random.choice(words)   #This picks a random word in the list
-print(randWord)
 
 while ("Y" and "y" in game):
 
