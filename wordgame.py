@@ -8,7 +8,7 @@ import random
 os.system('cls')
 counter = 1
 program = 1
-words = ["dallas","nyc","atlanta","washington","houston","jacksonville","nashville","indianapolis"]
+words = ["dallas","nyc","atlanta","washington","houston","jacksonville","nashville","indianapolis", "waxahachie", "paris", "chicago"]
 print(words)
 print ("This is a list of big cities in america. I have chosen a random city from this list. You have 5 guesses to try and guess which city I chose!")
 game = input("Do you want to play? Type Y for yes or N for no: ")
