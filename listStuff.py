@@ -1,87 +1,97 @@
 #Tom Reger
 # Collections in py
 
-import random, os
+import os
+import random 
+os.system('cls')
 
-def updateWord(word, guesses):
-  for letter in word:
+def updateWord(randWord,guesses):
+    for letter in randWord:
         if letter in guesses:
-            print(letter, end=" ")
+            print (letter,end=" ")
         else:
-            print('_', end=' ')
-#define func for mmenu
-def Menu():
-    print("# instructions#")
-    print("# Menu ##")
-    print("      1. Animals             ")
-    print("      2. Fruits              ")
-    print("      3. Computer Parts      ")
-    print("      4. Exit                ")
-    sel=input("What would you like to play?")
-    sel=int(sel)
-    return sel
+            print("_",end=" ")
+
+def menu():
+    print("####################################################")
+    print("#    This is a guessing game! Choose a category!   #")
+    print("#                                                  #")
+    print("#                       MENU                       #")
+    print("#                                                  #")
+    print("#                   1. ANIMALS                     #")
+    print("#                   2. FRUITS                      #")
+    print("#                   3. COMP PARTS                  #")
+    print("#                   4. EXIT                        #")
+    print("#                                                  #")
+    print("# To play the game, select 1-3, to exit, select 4. #")
+    print("####################################################")
+    print()
+    sel=input("What would you like to play? ")
+    try:
+        sel = int(sel)  #Tries if it is an integer
+        if sel < 5 and sel > 0:
+            check = True
+            return sel
+    except ValueError:
+        print("Give me a number from 1 - 4")
+        check = False
 def selWord(sel):
     if sel == 1:
-        word=random.choice(animals)
-    elif sel ==2:
-        word=random.choice(myfruits)
-    else:
-        word=random.choice(compParts)
+        randWord = random.choice(animals)
+    if sel == 2:
+        randWord = random.choice(fruits)
+    if sel == 3:
+        randWord = random.choice(compParts)
+    return randWord
 
-animals=["tiger, elephant"]
-myfruits = ["apple","bananas","oranges","grapes","strawberries","blackberries","blackberries"]
-compParts=["keyboard, computer"]
+animals = ["tiger","elephant","monkey","lion"]
+compParts = ["keyboard","monitor","computer","case","trackpad"]
+fruits = ["peach","apple","orange","grape","cherry","watermelon","banana","strawberry","blueberry","mango"]
 
+name = input("What is your name? ")
+counter = 0
+wins = 0
+sel = menu()
+game = "y"
+while sel!=4 and ("Y" and "y" in game):
+    print("Good Luck "+name+"! You have 5 lives")
+    turns = 5
+    counter += 1
+    randWord = selWord(sel)
+    randWord = randWord.lower()
+    wordCount = len(randWord)
+    print(randWord)
+    guesses = ""
+    updateWord(randWord,guesses)
+    letCount = 0
 
-print("Word Game")
-print("Guess what fruit I am thinking of")
-name=input("What is your name?")
-counter=0
-sel=Menu()
-while sel !=4:
-    print(name, "good luck, you have 5 chances")
-    turns=5
-    counter +=1
-    word= random.choice(myfruits)
-    word=word.lower()
-    print(word) #revove later
-    guesses=''
-    updateWord(word, guesses)
-    while turns>0:
-        newguess=input("Give me a letter")
-        newguess=newguess.lower()
-        if newguess in word:
-            guesses += newguess
-            print("You guessed right")
+    while turns > 0 and letCount<wordCount:
+        letCount = 0
+        print()
+        newGuess = input("Guess a letter: ")
+        newguess = newGuess.lower()
+        if newGuess in randWord:
+            guesses+=newGuess
+            print("You guessed a correct letter!")
         else:
-            turns -=1
-            print ("Sorry you have", turns, "left")
-answer=input(name+ "do you want to play again")
-    sel=Menu()
+            turns -= 1
+            print("That is not in the word. You have ", turns, " lives left")
+        for letter in randWord:
+            if letter in guesses:
+                print (letter,end=" ")
+                letCount+=1
+            else:
+                print("_",end=" ")
 
+    if turns == 0:
+        print("You lose!")
+    else:
+        print()
+        print("You win!")
+    game = input("Do you want to play again? Type Y for yes or N for no: ")
+    if ("Y" and "y" in game):
+        sel = menu()
+    if ("n" and "N" in game):
+        sel = 4
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# for x in MyFruits:
-#     print (x)
-# for x in MyFruits[0]:
-#     print( "_", end="")
+print("Thank you for playing!")
