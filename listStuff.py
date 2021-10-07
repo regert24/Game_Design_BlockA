@@ -1,5 +1,6 @@
 #Tom Reger
-# Collections in py
+#Guesing game complete
+#10/3/2021
 
 import os
 import random 
@@ -24,6 +25,7 @@ def menu():
     print("#                   4. EXIT                        #")
     print("#                                                  #")
     print("# To play the game, select 1-3, to exit, select 4. #")
+    print("#                                                  #")
     print("####################################################")
     print()
     sel=input("What would you like to play? ")
@@ -33,8 +35,10 @@ def menu():
             check = True
             return sel
     except ValueError:
-        print("Give me a number from 1 - 4")
+        print("Give me a number from 1 - 4. Try Again")
+        sel=input("What would you like to play? ")
         check = False
+        
 def selWord(sel):
     if sel == 1:
         randWord = random.choice(animals)
@@ -44,23 +48,21 @@ def selWord(sel):
         randWord = random.choice(compParts)
     return randWord
 
-animals = ["tiger","elephant","monkey","lion"]
-compParts = ["keyboard","monitor","computer","case","trackpad"]
+animals = ["tiger","elephant","monkey","lion","zebra","panther","rhino","dog","cat","bird","fish"]
+compParts = ["keyboard","monitor","computer","case","trackpad","headphone","motherboard","microphone"]
 fruits = ["peach","apple","orange","grape","cherry","watermelon","banana","strawberry","blueberry","mango"]
 
 name = input("What is your name? ")
-counter = 0
-wins = 0
+maxScore = 0
 sel = menu()
 game = "y"
 while sel!=4 and ("Y" and "y" in game):
-    print("Good Luck "+name+"! You have 5 lives")
-    turns = 5
-    counter += 1
     randWord = selWord(sel)
     randWord = randWord.lower()
     wordCount = len(randWord)
-    print(randWord)
+    turns = len(randWord) + 3
+    print("Good Luck ",name,"! You have ", turns," lives")
+    print (randWord)
     guesses = ""
     updateWord(randWord,guesses)
     letCount = 0
@@ -88,6 +90,11 @@ while sel!=4 and ("Y" and "y" in game):
     else:
         print()
         print("You win!")
+    os.system('cls')
+    score = 3*wordCount+5*turns
+    if score>maxScore:
+        maxScore = score
+    print (maxScore)
     game = input("Do you want to play again? Type Y for yes or N for no: ")
     if ("Y" and "y" in game):
         sel = menu()
