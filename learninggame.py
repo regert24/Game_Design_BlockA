@@ -37,10 +37,10 @@ wbox=50
 speed=10
 xc=random.randint(25,550)
 yc=random.randint(25,550)
-radius=hbox/2
+rcircle=hbox/2
 rect=pygame.Rect(width/2,height/2, wbox, hbox)
 pygame.draw.rect(window, (150, 200, 20), rect)
-pygame.draw.circle(window, colors.get('blue'), (xc,yc), radius)
+pygame.draw.circle(window, colors.get('blue'), (xc,yc), rcircle)
 pygame.display.flip()
 run=True
 
@@ -76,28 +76,15 @@ while run:
             rect.x += speed
     window.fill(color)
     pygame.draw.rect(window, colors.get('purple'), rect)
-    pygame.draw.circle(window, colors.get('blue'), (xc,yc), radius)
+    pygame.draw.circle(window, colors.get('blue'), (xc,yc), rcircle)
 
-    keyPressed = pygame.key.get_pressed()
-    if keyPressed[pygame.K_w]:
-        if yc < 0:
-           yc = height
-        else:
+    if keyPressed[pygame.K_w] and yc>rcircle:
             yc -= speed
-    if keyPressed[pygame.K_s]:
-        if yc < height:
-            yc = 0
-        else:
+    if keyPressed[pygame.K_s] and yc<height-rcircle:
             yc += speed
-    if keyPressed[pygame.K_a]:
-        if xc < 0:
-            xc=width
-        else:
+    if keyPressed[pygame.K_a] and xc>rcircle:
             xc -= speed
-    if keyPressed[pygame.K_d]:
-        if xc>width:
-            xc=0
-        else:
+    if keyPressed[pygame.K_d] and xc<width-rcircle:
             xc += speed
     pygame.display.flip()
 
