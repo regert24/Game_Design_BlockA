@@ -38,11 +38,12 @@ speed=10
 xc=random.randint(25,550)
 yc=random.randint(25,550)
 rcircle=hbox/2
-rect=pygame.Rect(width/2,height/2, wbox, hbox)
+rect=pygame.Rect(x,y, wbox, hbox)
 pygame.draw.rect(window, (150, 200, 20), rect)
 pygame.draw.circle(window, colors.get('blue'), (xc,yc), rcircle)
 pygame.display.flip()
 run=True
+
 
 #main loop for tge game:
 while run:
@@ -75,8 +76,7 @@ while run:
         else:
             rect.x += speed
     window.fill(color)
-    pygame.draw.rect(window, colors.get('purple'), rect)
-    pygame.draw.circle(window, colors.get('blue'), (xc,yc), rcircle)
+    
 
     if keyPressed[pygame.K_w] and yc>rcircle:
             yc -= speed
@@ -86,12 +86,21 @@ while run:
             xc -= speed
     if keyPressed[pygame.K_d] and xc<width-rcircle:
             xc += speed
-    pygame.display.flip()
-
-
     
 
-
-
+    point =(xc, yc)   
+    collide=rect.collidepoint(point)
+    #collide function
+    if collide:
+        rcircle=rcircle+(hbox/6)
+        x=random.randrange(0,width)
+        y=random.randrange(0,height)
+        rect=pygame.Rect(x,y,wbox,hbox)
+    pygame.draw.rect(window, colors.get('purple'), rect)
+    pygame.draw.circle(window, colors.get('blue'), (xc,yc), rcircle)
+    pygame.display.flip()
+    if rcircle == hbox*2:
+        pygame.quit
+        break
 pygame.quit()
 
