@@ -98,9 +98,9 @@ while run:
         rect=pygame.Rect(x,y,wbox,hbox)
     pygame.draw.rect(window, colors.get('purple'), rect)
     pygame.draw.circle(window, colors.get('blue'), (xc,yc), rcircle)
-    pygame.display.flip()
-    if rcircle == hbox*2:
-        pygame.quit
+    pygame.display.flip() 
+    if rcircle >= hbox*2:
+        pygame.display.quit()
         break
 pygame.quit()
 
