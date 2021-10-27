@@ -32,7 +32,7 @@ while run:
     display_message("oops")
     py.time.delay(300)
     win.fill((0,0,0))
-    display_message("bozo")
+    display_message("test")
     py.time.delay(200)
     win.fill((0,0,0))
 py.quit()
