@@ -1,43 +1,76 @@
 #tom reger
 #learn fonts
 
-import pygame as py, os, random, time
+import os, pygame, random
+os.system('cls')
 
-py.init()
+pygame.init()
 
-width = 800
+#Colors and their values
+red=(255,0,0)
+green=(0,255,0) 
+blue=(0,0,255)
+purple=(150,0,150) 
+yellow=(255,255,0)
+black = (0,0,0)
+white=(255,255,255)
+width=800
 height = 800
-BLACK=(255,255,255)
-win=py.display.set_mode((width, height))
-py.display.set_caption("Setting window")
 
-#TITLE_FONT=py.font.SysFont(name, size, bold=False,italic=False)
-TITLE_FONT=py.font.SysFont('comicsans', 80)
-subtitle_font=py.font.SysFont('comicsans',40, italic=True )
-def display_message(message):
-    py.time.delay(100)
-    text= TITLE_FONT.render(message,1,BLACK)
-    win.blit(text, (width/2-text.get_width()/2, 30))
-    py.display.update()
-    py.time.delay(100)
-def display_subtitle(message, x, y):
-    py.time.delay(100)
-    text = subtitle_font.render(message, 1,BLACK)
-    win.blit(text, (x, y))
-    py.display.flip()
-    py.time.delay(100)
+Setting_messages1 = ["SCREEN SIZE", "BACKGROUND COLOR","OBJECT COLOR","SOUNDS (ON/OFF)"]    #Setting Messages
+
+win = pygame.display.set_mode((width,height))
+win.fill(blue)
+pygame.display.set_caption("Setting Window")
+
+#Fonts 
+title_font=pygame.font.SysFont('comicsans',80)
+subtitle_font=pygame.font.SysFont('comicsans',30, italic=True)
+
+#Square
+hbox = 25
+wbox = 25
+square = pygame.Rect(10,10, wbox, hbox)
+
+def displayTitle(title):    #Title print function
+    pygame.time.delay(100)
+    text = title_font.render(title,1,red)
+    #win.blit(text,(width/2-text.get_width()/2, height/2-text.get_height()/2))
+    win.blit(text,(width/2-text.get_width()/2,30))
+    pygame.display.update()
+    pygame.time.delay(100)
+
+def displayMenu():  #Subtitle print function
+    pygame.time.delay(100)
+    x = 70
+    y = 190
+    square.x = x
+    square.y = y
+    for i in range (0, len(Setting_messages1)):
+        word = Setting_messages1[i]
+        pygame.draw.rect(win, purple, square)
+        text = subtitle_font.render(word,1,red)
+        win.blit(text,(x+wbox+10, y-10))
+        pygame.display.flip()
+        pygame.time.delay(100)
+        y +=100
+        square.y = y
+
 run=True
+count = 0
 while run:
-    for eve in py.event.get():
-        if eve.type == py.QUIT:
+    pygame.time.delay(10)
+    for eve in pygame.event.get():
+        if eve.type == pygame.QUIT:
             run=False
-            py.quit()
-    display_message("settings")
-    py.time.delay(300)
-    win.fill((0,0,0))
-    display_subtitle("window color", 90, 250)
-    display_subtitle("sound", 90, 350)
-    display_subtitle("quit game", 90, 450)
+            pygame.quit()
+    if count == 0:
+        displayTitle("SETTINGS")
+        displayMenu()
+        count+=1
+
+pygame.quit()
+
 #py.quit()
 
 
