@@ -5,7 +5,7 @@ import os, pygame, random
 os.system('cls')
 
 pygame.init()
-
+py=pygame
 #Colors and their values
 red=(255,0,0)
 green=(0,255,0) 
@@ -63,16 +63,47 @@ while run:
     for eve in pygame.event.get():
         if eve.type == pygame.QUIT:
             run=False
-            pygame.quit()
+    if eve.type==py.MOUSEBUTTONDOWN:
+        mouse_pressed=py.mouse.get_pressed()
+        if mouse_pressed[0]:
+            mouse_pos=py.mouse.get_pos()
+            if square.collidepoint(mouse_pressed):
+                win.fill(green)
+        
     if count == 0:
         displayTitle("SETTINGS")
         displayMenu()
         count+=1
+    mouse_pressed=py.mouse.get_pressed()
+    mouse_pos=py.mouse.get_pos()
+    y_min=190
+    y_max=212
 
-pygame.quit()
+    y_min2=291
+    y_max2=312
 
-#py.quit()
+    y_min3=390
+    y_max3=413
+
+    y_min4=491
+    y_max4=514
+    if mouse_pos[0]>=70 and mouse_pos[0]<=230 and mouse_pos[1]>=y_min and mouse_pos[1]<=y_max:
+        if mouse_pressed:
+            win.fill(blue)
+    if mouse_pos[0]>=70 and mouse_pos[0]<=230 and mouse_pos[1]>=y_min2 and mouse_pos[1]<=y_max2:
+        if mouse_pressed:
+            win.fill(blue)
+    if mouse_pos[0]>=70 and mouse_pos[0]<=230 and mouse_pos[1]>=y_min3 and mouse_pos[1]<=y_max3:
+       if mouse_pressed:
+            win.fill(blue)
+    if mouse_pos[0]>=70 and mouse_pos[0]<=230 and mouse_pos[1]>=y_min4 and mouse_pos[1]<=y_max4:
+        if mouse_pressed:
+            win.fill(blue)
+
+    
 
 
-
+    #x,y=pygame.mouse.get_pos()
+   #print("( "+ str(x)+ ", "+ str(y)+" )")
+    #pygame.quit()
 
