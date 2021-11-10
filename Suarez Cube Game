@@ -15,7 +15,7 @@ py.init()
 WIDTH=800
 HEIGHT=800
 
-boulder=py.Rect(WIDTH-300, HEIGHT-200, 100, 200)
+boulder=py.Rect(WIDTH-300, HEIGHT-300, 100, 300)
 #create window
 height= 700
 width = 800
@@ -74,7 +74,7 @@ while run:
 
     else:
         if jumpCount >= -10:
-            square.y -= jumpCountabs(jumpCount)0.5
+            square.y -= jumpCount*abs(jumpCount)*0.5
             jumpCount -= 1
         else:
             jumpCount = 10
