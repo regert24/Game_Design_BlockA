@@ -9,7 +9,6 @@
 # K_LEFT                left arrow
 import os
 import pygame as py
-
 #first thing
 py.init()
 WIDTH=800
@@ -22,8 +21,9 @@ width = 800
 colors = {'red':(150,0,0),'green':(0,200,0), 'blue':(0,0,255), 'purple':(150, 0, 150), 'white':(255,255,255), 'black':(0,0,0) }
 screen=py.display.set_mode((width, height))
 myColor= colors.get('purple')
-screen.fill(myColor)
 py.display.set_caption("Moving Square")
+bg=py.image.load("images\\back 2.0.jpg")
+screen.blit(bg, (0,0))
 py.display.flip()
 #parameters to define our square
 boulderColor=colors.get('blue')
@@ -44,6 +44,8 @@ run=True #Variable to control the main loop
 Jumping=False
 jumpCount=10
 while run:
+    screen.blit(bg, (0,0))
+
     py.time.delay(100) #milliseconds
     for anyThing in py.event.get():
         if anyThing.type == py.QUIT:
@@ -85,11 +87,11 @@ while run:
     #     square.x = square.x-wbox
     #     move=True
 
-    screen.fill(myColor)
+    screen.blit(bg, (0,0))
     py.draw.rect(screen,boulderColor,boulder)
     py.draw.rect(screen, objColor, square)
     py.display.flip()
-    screen.fill(myColor)
+    screen.blit(bg, (0,0))
     py.draw.rect(screen, boulderColor, boulder)
     py.draw.rect(screen, objColor, square)
     py.display.flip()
