@@ -16,13 +16,14 @@ HEIGHT=800
 
 boulder=py.Rect(WIDTH-300, HEIGHT-300, 100, 300)
 #create window
-height= 700
+height= 700 
 width = 800
 colors = {'red':(150,0,0),'green':(0,200,0), 'blue':(0,0,255), 'purple':(150, 0, 150), 'white':(255,255,255), 'black':(0,0,0) }
 screen=py.display.set_mode((width, height))
 myColor= colors.get('purple')
 py.display.set_caption("Moving Square")
 bg=py.image.load("images\\back 2.0.jpg")
+FIG=py.image.load("images\Pygame-Tutorials-master\Game\R6E.png")
 screen.blit(bg, (0,0))
 py.display.flip()
 #parameters to define our square
