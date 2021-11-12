@@ -13,7 +13,7 @@ import pygame as py
 py.init()
 WIDTH=800
 HEIGHT=800
-
+vel=5
 boulder=py.Rect(WIDTH-300, HEIGHT-300, 100, 300)
 #create window
 height= 700 
@@ -22,7 +22,7 @@ colors = {'red':(150,0,0),'green':(0,200,0), 'blue':(0,0,255), 'purple':(150, 0,
 screen=py.display.set_mode((width, height))
 myColor= colors.get('purple')
 py.display.set_caption("Moving Square")
-bg=py.image.load("images\\back 2.0.jpg")
+bg=py.image.load("images\scenery.2.0.jpg")
 FIG=py.image.load("images\Pygame-Tutorials-master\Game\R6E.png")
 screen.blit(bg, (0,0))
 py.display.flip()
@@ -35,6 +35,7 @@ hbox=50
 #creating out object square
 square=py.Rect(x,y,wbox, hbox )
 #draw object
+FIG=square
 objColor=colors.get('red')
 py.draw.rect(screen, objColor, square)
 py.display.update()
@@ -46,6 +47,7 @@ Jumping=False
 jumpCount=10
 while run:
     screen.blit(bg, (0,0))
+
 
     py.time.delay(100) #milliseconds
     for anyThing in py.event.get():
@@ -89,11 +91,83 @@ while run:
     #     move=True
 
     screen.blit(bg, (0,0))
+
     py.draw.rect(screen,boulderColor,boulder)
     py.draw.rect(screen, objColor, square)
     py.display.flip()
     screen.blit(bg, (0,0))
+
     py.draw.rect(screen, boulderColor, boulder)
     py.draw.rect(screen, objColor, square)
     py.display.flip()
 # py.quit()
+left = False
+right = False
+walkCount = 0
+
+
+def redrawGameWindow():
+    global walkCount
+    
+    screen.blit(bg, (0,0))
+    screen.blit(FIG, (0,0))
+  # This will draw our background image at (0,0)
+    py.display.update() 
+    
+
+
+run = True
+
+while run:
+    screen.blit(bg, (0,0))
+    screen.blit(FIG, (0,0))
+    py.time.delay(100)
+
+    for event in py.event.get():
+        if event.type == py.QUIT:
+            run = False
+
+    keys = py.key.get_pressed()
+    
+    if keys[py.K_LEFT] and x > vel: 
+        x -= vel
+
+    if keys[py.K_RIGHT] and x < 500 - vel - width:  
+        x += vel
+        
+    if not(isJump): 
+        if keys[py.K_SPACE]:
+            isJump = True
+    else:
+        if jumpCount >= -10:
+            y -= (jumpCount * abs(jumpCount)) * 0.5
+            jumpCount -= 1
+        else: 
+            jumpCount = 10
+            isJump = False
+
+    redrawGameWindow() 
+def redrawGameWindow():
+    # We have 9 images for our walking animation, I want to show the same image for 3 frames
+    # so I use the number 27 as an upper bound for walkCount because 27 / 3 = 9. 9 images shown
+    # 3 times each animation.
+    global walkCount
+    
+    screen.blit(bg, (0,0))  
+
+    if walkCount + 1 >= 27:
+        walkCount = 0
+        
+    if left:  # If we are facing left
+        screen.blit(FIG[walkCount//3], (x,y))  # We integer divide walkCounr by 3 to ensure each
+        walkCount += 1                           # image is shown 3 times every animation
+    elif right:
+        screen.blit(FIG[walkCount//3], (x,y))
+        walkCount += 1
+    else:
+        screen.blit(FIG, (x, y))  # If the character is standing still
+        
+    py.display.update() 
+    
+    
+py.quit()
