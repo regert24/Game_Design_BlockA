@@ -19,7 +19,7 @@ width=800
 height = 800
 COLOR=white
 flag=False
-Setting_messages1 = ["SCREEN SIZE", "BACKGROUND COLOR","OBJECT COLOR","SOUNDS (ON/OFF)"]    #Setting Messages
+Setting_messages1 = ["BACKGROUND COLOR","OBJECT COLOR"]    #Setting Messages
 Menu_messages=["Instructions", "Level 1", "Level 2", "Settings", "Scoreboard", "Exit"]
 win = pygame.display.set_mode((width,height))
 win.fill(blue)
@@ -98,7 +98,7 @@ while run:
             displayTitle("Instructions", 40)
             displayTitle("Back", height-100)
             count=1
-        if mouse_pos[0]>=320 and mouse_pos[0]<=485 and mouse_pos[1]>=height-100 and mouse_pos[1]<=height and (count==1 or count==2 or count ==3 or count==5 and count==9 and count==4):
+        if mouse_pos[0]>=320 and mouse_pos[0]<=485 and mouse_pos[1]>=height-100 and mouse_pos[1]<=height and (count==1 or count==2 or count ==3 or count==5 or count==9 or count==4):
             win.fill(white)
             displayTitle("Menu", 40)
             displayMenu(Menu_messages)
@@ -112,21 +112,15 @@ while run:
            
         # if mouse_pos[0]>=70 and mouse_pos[0]<=230 and mouse_pos[1]>=y_min3 and mouse_pos[1]<=y_max3:
          
-        if mouse_pos[0]>=70 and mouse_pos[0]<=230 and mouse_pos[1]>=y_min4 and mouse_pos[1]<=y_max4 and count==0:
+        if mouse_pos[0]>=70 and mouse_pos[0]<=230 and mouse_pos[1]>=y_min4 and mouse_pos[1]<=y_max4:
             win.fill(COLOR)
             displayTitle("Settings", 40)
             displayMenu(Setting_messages1)
             displayTitle("Back", height-100)
             count=4
             
-        if mouse_pos[0]>=70 and mouse_pos[0]<=230 and mouse_pos[1]>=y_min4 and mouse_pos[1]<=y_max4 and count==4:
-            win.fill(COLOR)
-            displayTitle("Sound", 40)
-            displayTitle("Back", height-100)
-            count=9
-            flag=True
-            print(count)
-    
+        
+
 #count=0 main menu
 #count 1 Instructions
 #count 2 level 1  
