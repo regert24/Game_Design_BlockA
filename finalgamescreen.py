@@ -22,15 +22,20 @@ width=800
 height = 800
 COLOR=white
 flag=False
-Setting_messages1 = ["BACKGROUND COLOR","OBJECT COLOR"]    #Setting Messages
+Setting_messages1 = ["BACKGROUND COLOR","WINDOW SIZE"]    #Setting Messages
+WindowMessages= ["900x900", "1000x1000", "800x800"]
 Menu_messages=["Instructions", "Level 1", "Level 2", "Settings", "Scoreboard", "Exit"]
 win = py.display.set_mode((width,height))
 win.fill('black')
 py.display.set_caption("Setting Window")
-
+walkRight = py.image.load('images\Pygame-Tutorials-master\Game\\R1.png')
+walkLeft = py.image.load('images\Pygame-Tutorials-master\Game\\L1.png')
 #Fonts 
 title_font=py.font.SysFont('comicsans',80)
 subtitle_font=py.font.SysFont('comicsans',30, italic=True)
+text_font=py.font.SysFont('comicsans',30)
+
+walkCount=0
 
 #Square
 hbox = 25
@@ -63,12 +68,120 @@ def displayMenu(message):  #Subtitle print function
         y +=100
         square.y = y
 
+def displayText(text,yu):    #Text function
+    py.time.delay(100)
+    text = text_font.render(text,1,COLOR)
+    #win.blit(text,(width/2-text.get_width()/2, height/2-text.get_height()/2))
+    win.blit(text,(width/2-text.get_width()/2,yu))
+    py.display.update()
+    py.time.delay(100)
+
+
+# def level1_game():
+#     bg=py.image.load("images\\volcanofinal.jpg")
+#     win = py.display.set_mode((WIDTH,HEIGHT))
+#     py.display.set_caption("Final Game")
+#     win.blit(bg,(0,0))
+#     win.blit(walkRight, (0,0))
+#     py.display.flip()
+#     boulder=py.Rect(WIDTH-300, HEIGHT-300, 100, 300)
 def level1_game():
-    bg=py.image.load("images\\volcanofinal.jpg")
     win = py.display.set_mode((WIDTH,HEIGHT))
-    py.display.set_caption("Final Game")
-    win.blit(bg, (0,0))
-    py.display.flip()
+    bg=py.image.load("images\\volcanofinal.jpg")
+    char = py.image.load('images\Pygame-Tutorials-master\Game\standing.png') 
+    x = 100
+    y = 100
+    width = 40
+    height = 60
+    vel = 5
+    
+    clock = py.time.Clock()
+
+    isJump = False
+    jumpCount = 10
+
+    left = False
+    right = False
+    walkCount = 0
+
+
+    def redrawGameWindow():
+        global walkCount
+        win.blit(bg, (0,0))  
+        if walkCount + 1 >= 27:
+            walkCount = 0
+            
+        if left:  
+            win.blit(walkLeft[walkCount//3], (x,y))
+            walkCount += 1                          
+        elif right:
+            win.blit(walkRight[walkCount//3], (x,y))
+            walkCount += 1
+        else:
+            win.blit(char, (x, y))
+            walkCount = 0
+            
+        py.display.update() 
+        
+
+    run = True
+
+    while run:
+        #print(pygame.mouse.get_pos())
+
+        clock.tick(27)
+
+        for event in py.event.get():
+            if event.type == py.QUIT:
+                run = False
+
+        keys = py.key.get_pressed()
+        
+        if keys[py.K_LEFT] and x > vel: 
+            x -= vel
+            left = True
+            right = False
+
+        elif keys[py.K_RIGHT] and x < 600 - vel - width:  
+            x += vel
+            left = False
+            right = True
+            
+        else: 
+            left = False
+            right = False
+            walkCount = 0
+            
+        if not(isJump):
+            if keys[py.K_SPACE]:
+                isJump = True
+                left = False
+                right = False
+                walkCount = 0
+        else:
+            if jumpCount >= -10:
+                y -= (jumpCount * abs(jumpCount)) * 0.5
+                jumpCount -= 1
+            else: 
+                jumpCount = 10
+                isJump = False
+        win.blit(bg, (0,0))
+
+        #if x<50:
+        #  Left=False
+    #  if x>300:
+        #  Right=False
+        redrawGameWindow() 
+        
+    py.quit()
+
+
+
+
+
+
+
+
 def level2_game():
     bg=py.image.load("images\\volcanofinal.jpg")
     win = py.display.set_mode((WIDTH,HEIGHT))
@@ -79,8 +192,11 @@ def level2_game():
 Jumping=False
 jumpCount=10
 
-
-
+Mainmenu=1
+settings=2
+bgcolor=3
+page=Mainmenu
+windowsettings=4
 
 run=True
 count = 0
@@ -112,31 +228,92 @@ while run:
 
         y_min4=491
         y_max4=514
-        if mouse_pos[0]>=70 and mouse_pos[0]<=230 and mouse_pos[1]>=y_min and mouse_pos[1]<=y_max and count==0:
-            win.fill(black)
-            displayTitle("Instructions", 40)
-            displayMenu("In this game you try to win")
-            displayTitle("Back", height-100)
-            count=1
-        if mouse_pos[0]>=320 and mouse_pos[0]<=485 and mouse_pos[1]>=height-100 and mouse_pos[1]<=height and (count==1 or count==2 or count ==3 or count==5 or count==9 or count==4):
-            win.fill(black)
-            displayTitle("Menu", 40)
-            displayMenu(Menu_messages)
-            count=0
+        if page==Mainmenu:
+            if mouse_pos[0]>=70 and mouse_pos[0]<=230 and mouse_pos[1]>=y_min and mouse_pos[1]<=y_max and count==0:
+                win.fill(black)
+                displayTitle("Instructions", 40)
+                displayText("Jump across the rocks before the volcano explodes",160)
+                displayText("Don't touch the lava!", 200)
+                displayTitle("Back", height-100)
+                count=1
+            if mouse_pos[0]>=320 and mouse_pos[0]<=485 and mouse_pos[1]>=height-100 and mouse_pos[1]<=height and (count==1 or count==2 or count ==3 or count==5 or count==9 or count==4):
+                win.fill(black)
+                displayTitle("Menu", 40)
+                displayMenu(Menu_messages)
+                count=0
 
+            
+            if mouse_pos[0]>=70 and mouse_pos[0]<=230 and mouse_pos[1]>=y_min2 and mouse_pos[1]<=y_max2:
+                level1_game()
 
+            
+            if mouse_pos[0]>=70 and mouse_pos[0]<=230 and mouse_pos[1]>=y_min3 and mouse_pos[1]<=y_max3:
+                level2_game()
 
-           
-        if mouse_pos[0]>=70 and mouse_pos[0]<=230 and mouse_pos[1]>=y_min2 and mouse_pos[1]<=y_max2:
-            level1_game()
+            if mouse_pos[0]>=70 and mouse_pos[0]<=230 and mouse_pos[1]>=y_min4 and mouse_pos[1]<=y_max4:
+                win.fill(black)
+                displayTitle("Settings", 40)
+                displayMenu(Setting_messages1)
+                displayTitle("Back", height-100)
+                page=settings
+        if page == settings:
+            if mouse_pos[0]>=320 and mouse_pos[0]<=485 and mouse_pos[1]>=height-100 and mouse_pos[1]<=height:
+                win.fill(black)
+                displayTitle("Menu", 40)
+                displayMenu(Menu_messages)
+                count=0
+                page=Mainmenu
 
-           
-        if mouse_pos[0]>=70 and mouse_pos[0]<=230 and mouse_pos[1]>=y_min3 and mouse_pos[1]<=y_max3:
-            level2_game()
-        if mouse_pos[0]>=70 and mouse_pos[0]<=230 and mouse_pos[1]>=y_min4 and mouse_pos[1]<=y_max4:
-            win.fill(black)
-            displayTitle("Settings", 40)
-            displayMenu(Setting_messages1)
-            displayTitle("Back", height-100)
-            count=4
+        if page==settings:
+            if mouse_pos[0]>=70 and mouse_pos[0]<=230 and mouse_pos[1]>=y_min and mouse_pos[1]<=y_max and count==0:
+                win.fill(black)
+                displayTitle("Background Color",40)
+                page = bgcolor
+                displayTitle("Back", height-100)
+            if mouse_pos[0]>=70 and mouse_pos[0]<=230 and mouse_pos[1]>=y_min2 and mouse_pos[1]<=y_max2 and count==0:
+                win.fill(black)
+                displayTitle("Window size",40)
+                displayMenu(WindowMessages)
+                displayTitle("Back", height-100)
+                page = windowsettings
+        if page==windowsettings:
+            if mouse_pos[0]>=70 and mouse_pos[0]<=230 and mouse_pos[1]>=y_min and mouse_pos[1]<=y_max and count==0:
+                win=py.display.set_mode((900, 900))
+                win.fill(black)
+                displayTitle("Window size",40)
+                page = windowsettings
+
+                displayMenu(WindowMessages)
+                displayTitle("Back", height-100)
+                py.display.update
+                page=settings
+            if mouse_pos[0]>=70 and mouse_pos[0]<=230 and mouse_pos[1]>=y_min2 and mouse_pos[1]<=y_max2 and count==0:
+                win=py.display.set_mode((1000, 1000))
+                win.fill(black)
+                displayTitle("Window size",40)
+                page = windowsettings
+                displayMenu(WindowMessages)
+                displayTitle("Back", height-100)
+                py.display.update
+                page=settings
+            if mouse_pos[0]>=70 and mouse_pos[0]<=230 and mouse_pos[1]>=y_min3 and mouse_pos[1]<=y_max3 and count==0:
+                win=py.display.set_mode((800, 800))
+                win.fill(black)
+                displayTitle("Window size",40)
+                
+                displayMenu(WindowMessages)
+                displayTitle("Back", height-100)
+                py.display.update
+                page=settings
+        # #if page == bgcolor or windowsettings:
+        #     if mouse_pos[0]>=320 and mouse_pos[0]<=485 and mouse_pos[1]>=height-100 and mouse_pos[1]<=height:
+        #         win.fill(black)
+        #         displayTitle("Settings", 40)
+        #         displayMenu(Setting_messages1)
+        #         count=0
+        #         page=settings
+        #         displayTitle("Back", height-100)
+    mouse_pos = (0,0)
+            
+
 #Credit to vivaan for the code determining the mouse position to click the button
