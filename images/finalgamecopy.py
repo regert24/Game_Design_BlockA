@@ -40,6 +40,7 @@ char = py.image.load('images\Pygame-Tutorials-master\Game\standing.png')
 lava=py.image.load('images\\lavaspritetest.png')
 rock=py.image.load('images\\rockspritetest.png')
 winimage=py.image.load('images\\YOUWIN.jpg')
+youlose=py.image.load('images\\youlose.jpg')
 walkCount = 0
 title_font=py.font.SysFont('comicsans',80)
 subtitle_font=py.font.SysFont('comicsans',30, italic=True)
@@ -119,7 +120,7 @@ def level1_game():
 
     def redrawGameWindow():
         global walkCount
-        win.blit(bg, (0,0))  
+        #win.blit(bg, (0,0))  
         if walkCount + 1 >= 27:
             walkCount = 0
             
@@ -139,7 +140,7 @@ def level1_game():
     run = True
 
     while run:
-        #print(pygame.mouse.get_pos())
+        #print(py.mouse.get_pos())
 
         clock.tick(27)
 
@@ -177,14 +178,14 @@ def level1_game():
             else: 
                 jumpCount = 10
                 isJump = False
-        if x > 850:
-            win.blit(winimage, (200,50))
-            py.display.update()
-        if x > 120 and x<210 and y<305:
-            win.blit(winimage, (200,50))
-            py.display.update()
+        # if x > 850:
+        #     win.blit(winimage, (200,50))
+        #     py.display.update()
+        # if x > 120 and x<210 and y<305:
+        #     win.blit(youlose, (200,50))
+        #     py.display.update()
         win.blit(bg, (0,0))
-        redrawGameWindow() 
+        
         win.blit(lava, (155-5,310))
         win.blit(rock, (0,310-95))
         win.blit(lava, (370-15,310))
@@ -193,7 +194,14 @@ def level1_game():
         win.blit(rock, (430-20,310-95))
         win.blit(rock, (645-30, 310-95))
         win.blit(rock, (750-30, 310-95))
+        redrawGameWindow() 
         py.display.flip()
+        if x > 850:
+            win.blit(winimage, (200,50))
+            py.display.update()
+        if x >= 120 and x<=180 and y>=200:
+            win.blit(youlose, (200,50))
+            py.display.update()
 
         #if x<50:
         #  Left=False
