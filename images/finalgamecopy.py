@@ -9,12 +9,15 @@ py.init()
 width2 = 40
 height2 = 60
 
+width3=700
+height3=800
 HEIGHT=394
+screen=py.display.set_mode((width3, height3))
 WIDTH=900
 run=True
 clock=py.time.Clock()
 #Colors and their values
-boulder=py.Rect(WIDTH-300, HEIGHT-300, 100, 300)
+boulder=py.Rect(WIDTH-300, HEIGHT-300, 100, 50)
 red=(255,0,0)
 green=(0,255,0) 
 blue=(0,0,255)
@@ -34,12 +37,16 @@ bg_messages=["Red","Blue", "Green", "Black"]
 walkRight = [py.image.load('images\Pygame-Tutorials-master\Game\R1.png'), py.image.load('images\Pygame-Tutorials-master\Game\R2.png'), py.image.load('images\Pygame-Tutorials-master\Game\R3.png'), py.image.load('images\Pygame-Tutorials-master\Game\R4.png'), py.image.load('images\Pygame-Tutorials-master\Game\R5.png'), py.image.load('images\Pygame-Tutorials-master\Game\R6.png'), py.image.load('images\Pygame-Tutorials-master\Game\R7.png'), py.image.load('images\Pygame-Tutorials-master\Game\R8.png'), py.image.load('images\Pygame-Tutorials-master\Game\R9.png')]
 walkLeft = [py.image.load('images\Pygame-Tutorials-master\Game\L1.png'), py.image.load('images\Pygame-Tutorials-master\Game\L2.png'), py.image.load('images\Pygame-Tutorials-master\Game\L3.png'), py.image.load('images\Pygame-Tutorials-master\Game\L4.png'), py.image.load('images\Pygame-Tutorials-master\Game\L5.png'), py.image.load('images\Pygame-Tutorials-master\Game\L6.png'), py.image.load('images\Pygame-Tutorials-master\Game\L7.png'), py.image.load('images\Pygame-Tutorials-master\Game\L8.png'), py.image.load('images\Pygame-Tutorials-master\Game\L9.png')]
 char = py.image.load('images\Pygame-Tutorials-master\Game\standing.png') 
+lava=py.image.load('images\\lavaspritetest.png')
+rock=py.image.load('images\\rockspritetest.png')
+winimage=py.image.load('images\\YOUWIN.jpg')
 walkCount = 0
 title_font=py.font.SysFont('comicsans',80)
 subtitle_font=py.font.SysFont('comicsans',30, italic=True)
 text_font=py.font.SysFont('comicsans',30)
 speed = 10
 colors = {'red':(150,0,0),'green':(0,200,0), 'blue':(0,0,255), 'purple':(150, 0, 150), 'white':(255,255,255), 'black':(0,0,0) }
+boulderColor=colors.get('red')
 win = py.display.set_mode((WIDTH,HEIGHT))
 boulderColor=colors.get('blue')
 objColor=colors.get('red')
@@ -95,7 +102,7 @@ def level1_game():
     bg=py.image.load("images\\volcanofinal.jpg")
     char = py.image.load('images\Pygame-Tutorials-master\Game\standing.png') 
     x = 100
-    y = 20
+    y = 250
     width = 40
     height = 60
     vel = 5
@@ -147,7 +154,7 @@ def level1_game():
             left = True
             right = False
 
-        elif keys[py.K_RIGHT] and x < 600 - vel - width:  
+        elif keys[py.K_RIGHT] and x < 900- vel - width:  
             x += vel
             left = False
             right = True
@@ -170,13 +177,29 @@ def level1_game():
             else: 
                 jumpCount = 10
                 isJump = False
+        if x > 850:
+            win.blit(winimage, (200,50))
+            py.display.update()
+        if x > 120 and x<210 and y<305:
+            win.blit(winimage, (200,50))
+            py.display.update()
         win.blit(bg, (0,0))
+        redrawGameWindow() 
+        win.blit(lava, (155-5,310))
+        win.blit(rock, (0,310-95))
+        win.blit(lava, (370-15,310))
+        win.blit(rock, (215-10,310-95))
+        win.blit(lava, (585-25,310))
+        win.blit(rock, (430-20,310-95))
+        win.blit(rock, (645-30, 310-95))
+        win.blit(rock, (750-30, 310-95))
+        py.display.flip()
 
         #if x<50:
         #  Left=False
     #  if x>300:
         #  Right=False
-        redrawGameWindow() 
+        
         
     py.quit()
 
