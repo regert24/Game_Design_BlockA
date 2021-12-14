@@ -438,6 +438,7 @@ while run:
                 displayTitle("Instructions", 40)
                 displayText("Jump across the rocks and make it to the end",160)
                 displayText("Don't touch the lava!", 200)
+                displayText("Use the arrow keys to move, and the space bar to jump from rock to rock")
                 displayTitle("Back", height-100)
                 
             if mouse_pos[0]>=320 and mouse_pos[0]<=485 and mouse_pos[1]>=height-100 and mouse_pos[1]<=height:
@@ -520,14 +521,16 @@ while run:
             if mouse_pos[0]>=70 and mouse_pos[0]<=230 and mouse_pos[1]>=y_min and mouse_pos[1]<=y_max:
                 win.fill(currentBackColor)
                 displayMenu(bg_messages)
-                page=bgcolor
+                displayTitle("BG Color", 40)
                 displayTitle("Back", height-100)
+                
+                
             mouse_pos=(0,0)
         if page==bgcolor:
             if mouse_pos[0]>=70 and mouse_pos[0]<=230 and mouse_pos[1]>=y_min and mouse_pos[1]<=y_max:
                 currentBackColor = red
                 win.fill(currentBackColor)
-                displayTitle("BACKGROUND COLOR",True)
+                displayTitle("BACKGROUND",True)
                 displayMenu(bg_messages)
                 displayTitle("Back", height-100)
             elif mouse_pos[0]>=70 and mouse_pos[0]<=230 and mouse_pos[1]>=y_min+100 and mouse_pos[1]<=y_max+100:
